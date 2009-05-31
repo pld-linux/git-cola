@@ -1,130 +1,16 @@
-diff -r -U 5 cola/controllers/bookmark.py cola/controllers/bookmark.py
---- cola/controllers/bookmark.py	2009-01-22 03:48:56.000000000 -0500
-+++ cola/controllers/bookmark.py	2009-02-05 11:27:20.000000000 -0500
-@@ -1,6 +1,5 @@
--#!/usr/bin/env python
- """This controller handles the bookmarks dialog."""
- 
- import os
- import sys
- 
-diff -r -U 5 cola/controllers/createbranch.py cola/controllers/createbranch.py
---- cola/controllers/createbranch.py	2009-01-22 03:48:56.000000000 -0500
-+++ cola/controllers/createbranch.py	2009-02-05 11:27:50.000000000 -0500
-@@ -1,6 +1,5 @@
--#!/usr/bin/env python
- """This controller handles the create branch dialog."""
- 
- 
- import os
- from PyQt4.QtGui import QDialog
-diff -r -U 5 cola/controllers/merge.py cola/controllers/merge.py
---- cola/controllers/merge.py	2009-01-22 03:48:56.000000000 -0500
-+++ cola/controllers/merge.py	2009-02-05 11:27:36.000000000 -0500
-@@ -1,6 +1,5 @@
--#!/usr/bin/env python
- """This controller handles the merge dialog."""
- 
- 
- from PyQt4.Qt import Qt
- 
-diff -r -U 5 cola/controllers/repobrowser.py cola/controllers/repobrowser.py
---- cola/controllers/repobrowser.py	2009-01-22 03:48:56.000000000 -0500
-+++ cola/controllers/repobrowser.py	2009-02-05 11:27:14.000000000 -0500
-@@ -1,6 +1,5 @@
--#!/usr/bin/env python
- """This controller handles the repository file browser."""
- 
- 
- import os
- from PyQt4.QtGui import QDialog
-diff -r -U 5 cola/controllers/search.py cola/controllers/search.py
---- cola/controllers/search.py	2009-01-22 03:48:56.000000000 -0500
-+++ cola/controllers/search.py	2009-02-05 11:27:39.000000000 -0500
-@@ -1,6 +1,5 @@
--#!/usr/bin/env python
- """This controller handles the search dialog."""
- 
- 
- import os
- import re
-diff -r -U 5 cola/controllers/util.py cola/controllers/util.py
---- cola/controllers/util.py	2009-01-22 03:48:56.000000000 -0500
-+++ cola/controllers/util.py	2009-02-05 11:27:29.000000000 -0500
-@@ -1,6 +1,5 @@
--#!/usr/bin/env python
- """This module provides utility controllers.
- """
- 
- 
- import os
-diff -r -U 5 cola/inotify.py cola/inotify.py
---- cola/inotify.py	2009-01-22 03:48:56.000000000 -0500
-+++ cola/inotify.py	2009-02-05 11:27:17.000000000 -0500
-@@ -1,6 +1,5 @@
--#!/usr/bin/env python
- # Copyright (c) 2008 David Aguilar
- """This module provides an inotify plugin for Linux and other systems
- which provide the pyinotify module.
- 
- """
-diff -r -U 5 cola/model.py cola/model.py
---- cola/model.py	2009-01-22 03:48:56.000000000 -0500
-+++ cola/model.py	2009-02-05 11:27:47.000000000 -0500
-@@ -1,6 +1,5 @@
--#!/usr/bin/env python
+--- bin/difftool/git-difftool~	2009-05-11 05:05:57.000000000 +0200
++++ bin/difftool/git-difftool	2009-05-31 11:40:47.304899717 +0200
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env perl
++#!/usr/bin/perl
  # Copyright (c) 2009 David Aguilar
- """
- This module provides the Model class, a generic, serializable
- data container.
- """
-diff -r -U 5 cola/observer.py cola/observer.py
---- cola/observer.py	2009-01-22 03:48:56.000000000 -0500
-+++ cola/observer.py	2009-02-05 11:27:25.000000000 -0500
-@@ -1,6 +1,5 @@
+ #
+ # This is a wrapper around the GIT_EXTERNAL_DIFF-compatible
+--- bin/git-cola~	2009-05-11 05:05:57.000000000 +0200
++++ bin/git-cola	2009-05-31 11:40:12.081294820 +0200
+@@ -1,4 +1,4 @@
 -#!/usr/bin/env python
- # Copyright (c) 2008 David Aguilar
- """This module provides the Observer design pattern.
++#!/usr/bin/python
+ # -*- python-mode -*-
+ """Takes care of starting the main function
  """
- 
- class Observer(object):
-diff -r -U 5 cola/qobserver.py cola/qobserver.py
---- cola/qobserver.py	2009-01-22 03:48:56.000000000 -0500
-+++ cola/qobserver.py	2009-02-05 11:27:04.000000000 -0500
-@@ -1,6 +1,5 @@
--#!/usr/bin/env python
- # Copyright (c) 2008 David Aguilar
- """This module provides the QObserver class which allows for simple
- correspondancies between model parameters and Qt widgets.
- 
- The QObserver class handles receiving notifications from
-diff -r -U 5 cola/settings.py cola/settings.py
---- cola/settings.py	2009-01-22 03:48:56.000000000 -0500
-+++ cola/settings.py	2009-02-05 11:27:44.000000000 -0500
-@@ -1,6 +1,5 @@
--#!/usr/bin/env python
- # Copyright (c) 2008 David Aguilar
- """This handles saving complex settings such as bookmarks, etc.
- """
- 
- import os
-diff -r -U 5 cola/utils.py cola/utils.py
---- cola/utils.py	2009-01-22 03:48:56.000000000 -0500
-+++ cola/utils.py	2009-02-05 11:27:09.000000000 -0500
-@@ -1,6 +1,5 @@
--#!/usr/bin/env python
- # Copyright (c) 2008 David Aguilar
- """This module provides miscellaneous utility functions."""
- 
- import os
- import re
-diff -r -U 5 cola/views/syntax.py cola/views/syntax.py
---- cola/views/syntax.py	2009-01-22 03:48:56.000000000 -0500
-+++ cola/views/syntax.py	2009-02-05 11:27:33.000000000 -0500
-@@ -1,6 +1,5 @@
--#!/usr/bin/python
- # Copyright (c) 2008 David Aguilar
- """This module provides SyntaxHighlighter classes.
- These classes are installed onto specific cola widgets and
- implement the diff syntax highlighting.
- 

@@ -1,11 +1,11 @@
 Summary:	A highly caffeinated git gui
 Name:		git-cola
-Version:	1.3.5.28
+Version:	1.3.7.60
 Release:	1
 License:	GPL v2+
 Group:		Development/Tools
 Source0:	http://cola.tuxfamily.org/releases/cola-%{version}-src.tar.gz
-# Source0-md5:	3ae77c4daa45e5deec249d5ec27efd34
+# Source0-md5:	b7bd6c8a4410be84d885bf7debd49aab
 Patch0:		%{name}-shebang.patch
 URL:		http://cola.tuxfamily.org/
 BuildRequires:	asciidoc
@@ -59,11 +59,9 @@ update-desktop-database &> /dev/null || :
 %doc COPYRIGHT LICENSE README
 %attr(755,root,root) %{_bindir}/git-cola
 %attr(755,root,root) %{_bindir}/git-difftool
-%attr(755,root,root) %{_bindir}/git-difftool-helper
+%attr(755,root,root) %{_bindir}/git-difftool--helper
 %{_desktopdir}/cola.desktop
-%{_datadir}/cola
-%{_docdir}/cola
+%{_datadir}/git-cola
+%{_docdir}/git-cola
 %{_mandir}/man1/git-cola.1*
-%{_mandir}/man1/git-difftool.1*
-%{py_sitescriptdir}/cola
 %{py_sitescriptdir}/*.egg-info
