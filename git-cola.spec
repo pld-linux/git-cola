@@ -27,6 +27,7 @@ caffeine-inspired features.
 %patch0 -p0
 
 %build
+export INSTALL_GIT_DIFFTOOL=1
 %{__python} setup.py build
 %{__make} doc
 
