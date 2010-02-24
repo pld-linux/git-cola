@@ -9,6 +9,8 @@ Source0:	http://cola.tuxfamily.org/releases/cola-%{version}-src.tar.gz
 Patch0:		%{name}-shebang.patch
 URL:		http://cola.tuxfamily.org/
 BuildRequires:	asciidoc
+BuildRequires:	git-core
+BuildRequires:	python-PyQt4
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.219
 BuildRequires:	xmlto
