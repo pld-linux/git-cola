@@ -52,10 +52,10 @@ rm -rf $RPM_BUILD_ROOT
 rm -rf $RPM_BUILD_ROOT
 
 %post
-update-desktop-database &> /dev/null || :
+update-desktop-database > /dev/null 2>&1 || :
 
 %postun
-update-desktop-database &> /dev/null || :
+update-desktop-database > /dev/null 2>&1 || :
 
 %files
 %defattr(644,root,root,755)
