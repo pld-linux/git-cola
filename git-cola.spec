@@ -10,8 +10,11 @@ URL:		http://git-cola.github.io/
 BuildRequires:	desktop-file-utils
 BuildRequires:	gettext
 BuildRequires:	git-core >= 1.5.2
-BuildRequires:	python-devel
-BuildRequires:	rpmbuild(macros) >= 1.219
+BuildRequires:	python-modules
+BuildRequires:	python-setuptools
+BuildRequires:	rpm-pythonprov
+BuildRequires:	rpmbuild(macros) >= 1.714
+BuildRequires:	sed >= 4.0
 BuildRequires:	sip-PyQt4 >= 4.3
 BuildRequires:	sphinx-pdg
 BuildRequires:	xmlto
@@ -28,6 +31,12 @@ interface.
 
 %prep
 %setup -q
+
+# fix #!/usr/bin/env python -> #!/usr/bin/python:
+%{__sed} -i -e '1s,^#!.*python,#!%{__python},' bin/git-* cola/widgets/*.py extras/*/*.py share/git-cola/bin/git*
+
+# cleanup backups after patching
+find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
 
 %build
 %{__make}
