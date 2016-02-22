@@ -14,14 +14,16 @@ URL:		http://git-cola.github.io/
 BuildRequires:	desktop-file-utils
 BuildRequires:	gettext-tools
 BuildRequires:	git-core >= 1.5.2
+BuildRequires:	python-PyQt4
+BuildRequires:	python-devel
 BuildRequires:	python-modules
 BuildRequires:	python-setuptools
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
 BuildRequires:	sed >= 4.0
-BuildRequires:	sip-PyQt4 >= 4.3
 %if %{with doc}
-BuildRequires:	sphinx-pdg
+BuildRequires:	sip-PyQt4 >= 4.3
+BuildRequires:	sphinx-pdg-2
 BuildRequires:	xmlto
 %endif
 Requires:	git-core >= 1.5.2
@@ -57,12 +59,13 @@ find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
 
 %build
 %{__make}
-%{?with_doc:%{__make} doc}
+%{?with_doc:%{__make} doc SPHINXBUILD=sphinx-build-2}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 %{__make} install %{?with_doc:install-doc install-html} \
 	prefix=%{_prefix} \
+	SPHINXBUILD=sphinx-build-2 \
 	DESTDIR=$RPM_BUILD_ROOT \
 
 # doc sources
