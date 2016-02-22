@@ -22,9 +22,8 @@ BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
 BuildRequires:	sed >= 4.0
 %if %{with doc}
-BuildRequires:	sip-PyQt4 >= 4.3
+BuildRequires:	rsync
 BuildRequires:	sphinx-pdg-2
-BuildRequires:	xmlto
 %endif
 Requires:	git-core >= 1.5.2
 Requires:	hicolor-icon-theme
@@ -63,7 +62,7 @@ find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%{__make} install %{?with_doc:install-doc install-html} \
+%{__make} install -j1 %{?with_doc:install-doc install-html} \
 	prefix=%{_prefix} \
 	SPHINXBUILD=sphinx-build-2 \
 	DESTDIR=$RPM_BUILD_ROOT \
