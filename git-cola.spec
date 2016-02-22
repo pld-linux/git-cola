@@ -12,7 +12,7 @@ Source0:	https://github.com/git-cola/git-cola/archive/v%{version}/%{name}-%{vers
 Group:		Development/Tools
 URL:		http://git-cola.github.io/
 BuildRequires:	desktop-file-utils
-BuildRequires:	gettext
+BuildRequires:	gettext-tools
 BuildRequires:	git-core >= 1.5.2
 BuildRequires:	python-modules
 BuildRequires:	python-setuptools
