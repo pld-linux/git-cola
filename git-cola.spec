@@ -1,73 +1,68 @@
-Summary:	A highly caffeinated git gui
+Summary:	A sleek and powerful git GUI
 Name:		git-cola
-Version:	1.3.7.60
+Version:	2.3
 Release:	1
 License:	GPL v2+
+Source0:	https://github.com/git-cola/git-cola/archive/v%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	0f3c5355eda07e752d1f8f536882a2d0
 Group:		Development/Tools
-Source0:	http://cola.tuxfamily.org/releases/cola-%{version}-src.tar.gz
-# Source0-md5:	b7bd6c8a4410be84d885bf7debd49aab
-Patch0:		%{name}-shebang.patch
-URL:		http://cola.tuxfamily.org/
-BuildRequires:	asciidoc
-BuildRequires:	docbook-dtd45-xml
-BuildRequires:	gettext-devel
-BuildRequires:	git-core
-BuildRequires:	python-PyQt4
+URL:		http://git-cola.github.io/
+BuildRequires:	desktop-file-utils
+BuildRequires:	gettext
+BuildRequires:	git-core >= 1.5.2
 BuildRequires:	python-devel
-BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.219
+BuildRequires:	sip-PyQt4 >= 4.3
+BuildRequires:	sphinx-pdg
 BuildRequires:	xmlto
+Requires:	PyQt4 >= 4.3
 Requires:	git-core >= 1.5.2
-Requires:	python >= 1:2.4
-Requires:	python-PyQt4 >= 4.3
+Requires:	hicolor-icon-theme
+Requires:	python-inotify
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-A sweet, carbonated git gui known for its sugary flavour and
-caffeine-inspired features.
+git-cola is a powerful git GUI with a slick and intuitive user
+interface.
 
 %prep
-%setup -q -n cola-%{version}
-%patch0 -p0
+%setup -q
 
 %build
-export INSTALL_GIT_DIFFTOOL=1
-%{__python} setup.py build
+%{__make}
 %{__make} doc
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%{__python} setup.py install -O1 \
-	--skip-build \
-	--root $RPM_BUILD_ROOT \
-	--prefix=%{_prefix}
-
-%{__make} install-doc install-html \
+%{__make} install install-doc install-html \
+	prefix=%{_prefix} \
 	DESTDIR=$RPM_BUILD_ROOT \
-	prefix=%{_prefix}
 
-%py_ocomp $RPM_BUILD_ROOT%{py_sitedir}
-%py_comp $RPM_BUILD_ROOT%{py_sitedir}
-%py_postclean
+%find_lang %{name}
+
+desktop-file-validate $RPM_BUILD_ROOT%{_desktopdir}/git-cola-folder-handler.desktop
+desktop-file-validate $RPM_BUILD_ROOT%{_desktopdir}/git-cola.desktop
+desktop-file-validate $RPM_BUILD_ROOT%{_desktopdir}/git-dag.desktop
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post
-update-desktop-database > /dev/null 2>&1 || :
+%update_desktop_database
+%update_icon_cache hicolor
 
 %postun
-update-desktop-database > /dev/null 2>&1 || :
+%update_desktop_database
+%update_icon_cache hicolor
 
-%files
+%files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc COPYRIGHT LICENSE README
-%attr(755,root,root) %{_bindir}/git-cola
-%attr(755,root,root) %{_bindir}/git-difftool
-%attr(755,root,root) %{_bindir}/git-difftool--helper
-%{_desktopdir}/cola.desktop
-%{_datadir}/git-cola
-%{_docdir}/git-cola
-%{_mandir}/man1/git-cola.1*
-%{py_sitescriptdir}/*.egg-info
+%doc COPYING COPYRIGHT README.md
+%attr(755,root,root) %{_bindir}/cola
+%attr(755,root,root) %{_bindir}/git-*
+%{_desktopdir}/git*.desktop
+%{_datadir}/%{name}/
+%{_iconsdir}/hicolor/scalable/apps/%{name}.svg
+%{_docdir}/%{name}/
+%{_mandir}/man1/git*.1*
