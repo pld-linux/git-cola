@@ -67,6 +67,10 @@ rm -rf $RPM_BUILD_ROOT
 	SPHINXBUILD=sphinx-build-2 \
 	DESTDIR=$RPM_BUILD_ROOT \
 
+%py_ocomp $RPM_BUILD_ROOT%{_datadir}/%{name}
+%py_comp $RPM_BUILD_ROOT%{_datadir}/%{name}
+%py_postclean %{_datadir}/%{name}
+
 # doc sources
 %{__rm} $RPM_BUILD_ROOT%{_docdir}/%{name}/*.rst
 # packaged manually
