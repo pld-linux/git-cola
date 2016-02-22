@@ -18,7 +18,7 @@ BuildRequires:	sed >= 4.0
 BuildRequires:	sip-PyQt4 >= 4.3
 BuildRequires:	sphinx-pdg
 BuildRequires:	xmlto
-Requires:	PyQt4 >= 4.3
+Requires:	sip-PyQt4 >= 4.3
 Requires:	git-core >= 1.5.2
 Requires:	hicolor-icon-theme
 Requires:	python-inotify
@@ -48,6 +48,7 @@ rm -rf $RPM_BUILD_ROOT
 	prefix=%{_prefix} \
 	DESTDIR=$RPM_BUILD_ROOT \
 
+mv $RPM_BUILD_ROOT/usr/share/locale/{id_ID,id}
 %find_lang %{name}
 
 desktop-file-validate $RPM_BUILD_ROOT%{_desktopdir}/git-cola-folder-handler.desktop
