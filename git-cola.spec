@@ -1,3 +1,7 @@
+#
+# Conditional build:
+%bcond_without	doc	# don't build doc
+
 Summary:	A sleek and powerful git GUI
 Name:		git-cola
 Version:	2.3
@@ -16,18 +20,31 @@ BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
 BuildRequires:	sed >= 4.0
 BuildRequires:	sip-PyQt4 >= 4.3
+%if %{with doc}
 BuildRequires:	sphinx-pdg
 BuildRequires:	xmlto
-Requires:	sip-PyQt4 >= 4.3
+%endif
 Requires:	git-core >= 1.5.2
 Requires:	hicolor-icon-theme
 Requires:	python-inotify
+Requires:	sip-PyQt4 >= 4.3
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 git-cola is a powerful git GUI with a slick and intuitive user
 interface.
+
+%package doc
+Summary:	Documentation for git-cola
+Summary(pl.UTF-8):	Dokumentacja do git-cola
+Group:		Documentation
+
+%description doc
+Documentation for git-cola.
+
+%description doc -l pl.UTF-8
+Dokumentacja do git-cola.
 
 %prep
 %setup -q
@@ -40,15 +57,20 @@ find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
 
 %build
 %{__make}
-%{__make} doc
+%{?with_doc:%{__make} doc}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%{__make} install install-doc install-html \
+%{__make} install %{?with_doc:install-doc install-html} \
 	prefix=%{_prefix} \
 	DESTDIR=$RPM_BUILD_ROOT \
 
-mv $RPM_BUILD_ROOT/usr/share/locale/{id_ID,id}
+# doc sources
+%{__rm} $RPM_BUILD_ROOT%{_docdir}/%{name}/*.rst
+# packaged manually
+%{__rm} $RPM_BUILD_ROOT%{_docdir}/%{name}/*.html
+
+mv $RPM_BUILD_ROOT%{_localedir}/{id_ID,id}
 %find_lang %{name}
 
 desktop-file-validate $RPM_BUILD_ROOT%{_desktopdir}/git-cola-folder-handler.desktop
@@ -69,10 +91,22 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc COPYING COPYRIGHT README.md
+%doc share/doc/git-cola/hotkeys.html
+%doc %lang(de) share/doc/git-cola/hotkeys_de.html
+%doc %lang(zh_CN) share/doc/git-cola/hotkeys_zh_CN.html
+%doc %lang(zh_TW) share/doc/git-cola/hotkeys_zh_TW.html
 %attr(755,root,root) %{_bindir}/cola
-%attr(755,root,root) %{_bindir}/git-*
-%{_desktopdir}/git*.desktop
-%{_datadir}/%{name}/
+%attr(755,root,root) %{_bindir}/git-cola
+%attr(755,root,root) %{_bindir}/git-dag
+%{_desktopdir}/git-cola-folder-handler.desktop
+%{_desktopdir}/git-cola.desktop
+%{_desktopdir}/git-dag.desktop
+%{_datadir}/%{name}
 %{_iconsdir}/hicolor/scalable/apps/%{name}.svg
-%{_docdir}/%{name}/
-%{_mandir}/man1/git*.1*
+%{?with_doc:%{_mandir}/man1/git*.1*}
+
+%if %{with doc}
+%files doc
+%defattr(644,root,root,755)
+%{_docdir}/%{name}
+%endif
