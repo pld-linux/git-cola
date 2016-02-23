@@ -1,5 +1,6 @@
 #
 # Conditional build:
+%bcond_without	tests	# do not perform "make test"
 %bcond_without	doc	# don't build doc
 
 Summary:	A sleek and powerful git GUI
@@ -7,9 +8,10 @@ Name:		git-cola
 Version:	2.3
 Release:	1
 License:	GPL v2+
+Group:		Development/Tools
 Source0:	https://github.com/git-cola/git-cola/archive/v%{version}/%{name}-%{version}.tar.gz
 # Source0-md5:	0f3c5355eda07e752d1f8f536882a2d0
-Group:		Development/Tools
+Patch0:		disable-live-tests.patch
 URL:		http://git-cola.github.io/
 BuildRequires:	desktop-file-utils
 BuildRequires:	gettext-tools
@@ -21,6 +23,9 @@ BuildRequires:	python-setuptools
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
 BuildRequires:	sed >= 4.0
+%if %{with doc}
+BuildRequires:	python-nose
+%endif
 %if %{with doc}
 BuildRequires:	rsync
 BuildRequires:	sphinx-pdg-2
@@ -49,15 +54,20 @@ Dokumentacja do git-cola.
 
 %prep
 %setup -q
+%patch0 -p1
 
 # fix #!/usr/bin/env python -> #!/usr/bin/python:
 %{__sed} -i -e '1s,^#!.*python,#!%{__python},' bin/git-* cola/widgets/*.py extras/*/*.py share/git-cola/bin/git*
+
+# requires X for test
+rm test/qtutils_test.py
 
 # cleanup backups after patching
 find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
 
 %build
 %{__make}
+%{?with_tests:%{__make} test NOSETESTS=nosetests-%{py_ver}}
 %{?with_doc:%{__make} doc SPHINXBUILD=sphinx-build-2}
 
 %install
