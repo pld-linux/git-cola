@@ -30,7 +30,9 @@ BuildRequires:	python-nose
 BuildRequires:	rsync
 BuildRequires:	sphinx-pdg-2
 %endif
+Requires:	desktop-file-utils
 Requires:	git-core >= 1.5.2
+Requires:	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
 Requires:	python-inotify
 Requires:	sip-PyQt4 >= 4.3
