@@ -68,7 +68,7 @@ rm test/qtutils_test.py
 rm share/git-cola/bin/ssh-askpass-darwin
 
 install -d share/git-cola/doc
-mv share/doc/git-cola/hotkeys*.html share/git-cola/doc
+ln share/doc/git-cola/hotkeys*.html share/git-cola/doc
 
 # cleanup backups after patching
 find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
@@ -89,10 +89,12 @@ rm -rf $RPM_BUILD_ROOT
 %py_comp $RPM_BUILD_ROOT%{_datadir}/%{name}
 %py_postclean %{_datadir}/%{name}
 
+# we want hotkeys html in app dir
 cp -a share/git-cola/doc $RPM_BUILD_ROOT%{_datadir}/%{name}
-
-# doc sources
-%{__rm} $RPM_BUILD_ROOT%{_docdir}/%{name}/*.rst
+# the html docs are packaged as %doc keyword
+rm -rf html
+mv $RPM_BUILD_ROOT%{_docdir}/%{name}/html .
+rm -r $RPM_BUILD_ROOT%{_docdir}/%{name}
 
 mv $RPM_BUILD_ROOT%{_localedir}/{id_ID,id}
 mv $RPM_BUILD_ROOT%{_localedir}/{tr_TR,tr}
@@ -138,5 +140,5 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with doc}
 %files doc
 %defattr(644,root,root,755)
-%{_docdir}/%{name}
+%doc html/*
 %endif
