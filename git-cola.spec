@@ -3,14 +3,14 @@
 %bcond_without	tests	# do not perform "make test"
 %bcond_without	doc	# don't build doc
 
-Summary:	A sleek and powerful git GUI
+Summary:	A sleek and powerful Git GUI
 Name:		git-cola
-Version:	2.3
+Version:	2.5
 Release:	1
 License:	GPL v2+
 Group:		Development/Tools
 Source0:	https://github.com/git-cola/git-cola/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	0f3c5355eda07e752d1f8f536882a2d0
+# Source0-md5:	39ffee2dd5d42f0dd9574af1ee8516b2
 Patch0:		disable-live-tests.patch
 URL:		http://git-cola.github.io/
 BuildRequires:	desktop-file-utils
@@ -34,13 +34,12 @@ Requires:	desktop-file-utils
 Requires:	git-core >= 1.5.2
 Requires:	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
-Requires:	python-inotify
-Requires:	sip-PyQt4 >= 4.3
+Requires:	python-PyQt4 >= 4.3
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-git-cola is a powerful git GUI with a slick and intuitive user
+git-cola is a powerful Git GUI with a slick and intuitive user
 interface.
 
 %package doc
@@ -89,6 +88,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__rm} $RPM_BUILD_ROOT%{_docdir}/%{name}/*.html
 
 mv $RPM_BUILD_ROOT%{_localedir}/{id_ID,id}
+mv $RPM_BUILD_ROOT%{_localedir}/{tr_TR,tr}
 %find_lang %{name}
 
 desktop-file-validate $RPM_BUILD_ROOT%{_desktopdir}/git-cola-folder-handler.desktop
