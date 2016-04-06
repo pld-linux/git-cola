@@ -1,0 +1,13 @@
+--- git-cola-2.5/cola/resources.py~	2016-01-03 07:14:37.000000000 +0200
++++ git-cola-2.5/cola/resources.py	2016-04-06 12:43:50.260493369 +0300
+@@ -30,8 +30,8 @@
+ 
+ 
+ def doc(*args):
+-    """Return a path relative to cola's /usr/share/doc/ directory"""
+-    return os.path.join(_prefix, 'share', 'doc', 'git-cola', *args)
++    """Return a path relative to cola's /usr/share/git-cola/doc/ directory"""
++    return os.path.join(_prefix, 'share', 'git-cola', 'doc', *args)
+ 
+ 
+ def html_docs():
