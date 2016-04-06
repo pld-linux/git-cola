@@ -12,6 +12,7 @@ Group:		Development/Tools
 Source0:	https://github.com/git-cola/git-cola/archive/v%{version}/%{name}-%{version}.tar.gz
 # Source0-md5:	39ffee2dd5d42f0dd9574af1ee8516b2
 Patch0:		disable-live-tests.patch
+Patch1:		paths.patch
 URL:		http://git-cola.github.io/
 BuildRequires:	desktop-file-utils
 BuildRequires:	gettext-tools
@@ -56,12 +57,18 @@ Dokumentacja do git-cola.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 # fix #!/usr/bin/env python -> #!/usr/bin/python:
 %{__sed} -i -e '1s,^#!.*python,#!%{__python},' bin/git-* cola/widgets/*.py extras/*/*.py share/git-cola/bin/git*
 
 # requires X for test
 rm test/qtutils_test.py
+# we package for linux
+rm share/git-cola/bin/ssh-askpass-darwin
+
+install -d share/git-cola/doc
+mv share/doc/git-cola/hotkeys*.html share/git-cola/doc
 
 # cleanup backups after patching
 find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
@@ -82,10 +89,10 @@ rm -rf $RPM_BUILD_ROOT
 %py_comp $RPM_BUILD_ROOT%{_datadir}/%{name}
 %py_postclean %{_datadir}/%{name}
 
+cp -a share/git-cola/doc $RPM_BUILD_ROOT%{_datadir}/%{name}
+
 # doc sources
 %{__rm} $RPM_BUILD_ROOT%{_docdir}/%{name}/*.rst
-# packaged manually
-%{__rm} $RPM_BUILD_ROOT%{_docdir}/%{name}/*.html
 
 mv $RPM_BUILD_ROOT%{_localedir}/{id_ID,id}
 mv $RPM_BUILD_ROOT%{_localedir}/{tr_TR,tr}
@@ -109,19 +116,24 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc COPYING COPYRIGHT README.md
-%doc share/doc/git-cola/hotkeys.html
-%doc %lang(de) share/doc/git-cola/hotkeys_de.html
-%doc %lang(zh_CN) share/doc/git-cola/hotkeys_zh_CN.html
-%doc %lang(zh_TW) share/doc/git-cola/hotkeys_zh_TW.html
 %attr(755,root,root) %{_bindir}/cola
 %attr(755,root,root) %{_bindir}/git-cola
 %attr(755,root,root) %{_bindir}/git-dag
+%{?with_doc:%{_mandir}/man1/git*.1*}
 %{_desktopdir}/git-cola-folder-handler.desktop
 %{_desktopdir}/git-cola.desktop
 %{_desktopdir}/git-dag.desktop
-%{_datadir}/%{name}
+%dir %{_datadir}/%{name}
+%{_datadir}/%{name}/icons
+%{_datadir}/%{name}/lib
+%dir %{_datadir}/%{name}/bin
+%attr(755,root,root) %{_datadir}/%{name}/bin/*
+%dir %{_datadir}/%{name}/doc
+%doc %{_datadir}/%{name}/doc/hotkeys.html
+%doc %lang(de) %{_datadir}/%{name}/doc/hotkeys_de.html
+%doc %lang(zh_CN) %{_datadir}/%{name}/doc/hotkeys_zh_CN.html
+%doc %lang(zh_TW) %{_datadir}/%{name}/doc/hotkeys_zh_TW.html
 %{_iconsdir}/hicolor/scalable/apps/%{name}.svg
-%{?with_doc:%{_mandir}/man1/git*.1*}
 
 %if %{with doc}
 %files doc
