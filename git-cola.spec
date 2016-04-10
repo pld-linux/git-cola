@@ -36,6 +36,7 @@ Requires:	git-core >= 1.5.2
 Requires:	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
 Requires:	python-PyQt4 >= 4.3
+Suggests:	python-send2trash
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
