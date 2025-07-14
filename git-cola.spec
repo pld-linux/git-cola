@@ -57,8 +57,8 @@ Dokumentacja do git-cola.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
+%patch -P0 -p1
+%patch -P1 -p1
 
 # fix #!/usr/bin/env python -> #!/usr/bin/python:
 %{__sed} -i -e '1s,^#!.*python,#!%{__python},' bin/git-* cola/widgets/*.py extras/*/*.py share/git-cola/bin/git*
